@@ -1,38 +1,69 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import {
+  beforeAfterItems,
+  customerAccounts,
+  services,
+  type BeforeAfterItem,
+  type CustomerAccount,
+  type CustomerLoginRequest,
+  type CustomerSignupRequest,
+  type InsertBeforeAfterItem,
+  type InsertService,
+  type Service,
+} from "@shared/schema";
+import { eq } from "drizzle-orm";
+import { db } from "./db";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  createCustomerAccount(input: CustomerSignupRequest): Promise<CustomerAccount>;
+  getCustomerAccountByPhone(phone: string): Promise<CustomerAccount | undefined>;
+
+  listServices(): Promise<Service[]>;
+  createService(input: InsertService): Promise<Service>;
+
+  listBeforeAfterItems(): Promise<BeforeAfterItem[]>;
+  createBeforeAfterItem(input: InsertBeforeAfterItem): Promise<BeforeAfterItem>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-
-  constructor() {
-    this.users = new Map();
+export class DatabaseStorage implements IStorage {
+  async createCustomerAccount(input: CustomerSignupRequest): Promise<CustomerAccount> {
+    const [created] = await db
+      .insert(customerAccounts)
+      .values({
+        name: input.name,
+        phone: input.phone,
+        passwordHash: input.passwordHash,
+      })
+      .returning();
+    return created;
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async getCustomerAccountByPhone(
+    phone: string,
+  ): Promise<CustomerAccount | undefined> {
+    const [found] = await db
+      .select()
+      .from(customerAccounts)
+      .where(eq(customerAccounts.phone, phone));
+    return found ?? undefined;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async listServices(): Promise<Service[]> {
+    return await db.select().from(services);
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async createService(input: InsertService): Promise<Service> {
+    const [created] = await db.insert(services).values(input).returning();
+    return created;
+  }
+
+  async listBeforeAfterItems(): Promise<BeforeAfterItem[]> {
+    return await db.select().from(beforeAfterItems);
+  }
+
+  async createBeforeAfterItem(input: InsertBeforeAfterItem): Promise<BeforeAfterItem> {
+    const [created] = await db.insert(beforeAfterItems).values(input).returning();
+    return created;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
