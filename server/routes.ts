@@ -191,5 +191,38 @@ export async function registerRoutes(
     return res.json(items);
   });
 
+  app.post(api.bookings.create.path, async (req: any, res) => {
+    const customer = getCustomerFromSession(req);
+    if (!customer) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    try {
+      const input = api.bookings.create.input.parse(req.body);
+      const booking = await storage.createBooking({
+        ...input,
+        customerId: customer.id,
+      });
+      return res.status(201).json({ id: booking.id });
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({
+          message: err.errors[0]?.message ?? "Invalid input",
+          field: String(err.errors[0]?.path?.[0] ?? ""),
+        });
+      }
+      throw err;
+    }
+  });
+
+  app.get(api.bookings.list.path, async (req: any, res) => {
+    const customer = getCustomerFromSession(req);
+    if (!customer) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const items = await storage.listBookings(customer.id);
+    return res.json(items);
+  });
+
   return httpServer;
 }

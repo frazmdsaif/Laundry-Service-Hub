@@ -4,6 +4,7 @@ import {
   pgTable,
   text,
   varchar,
+  timestamp,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -31,6 +32,18 @@ export const beforeAfterItems = pgTable("before_after_items", {
   afterImageUrl: text("after_image_url").notNull(),
 });
 
+export const bookings = pgTable("bookings", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  customerId: varchar("customer_id").notNull(),
+  bookingDate: text("booking_date").notNull(),
+  bookingTime: text("booking_time").notNull(),
+  address: text("address").notNull(),
+  landmark: text("landmark"),
+  city: text("city").notNull(),
+  status: text("status").notNull().default("pending"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertCustomerAccountSchema = createInsertSchema(customerAccounts).omit({
   id: true,
   passwordHash: true,
@@ -46,6 +59,12 @@ export const insertBeforeAfterItemSchema = createInsertSchema(beforeAfterItems).
   id: true,
 });
 
+export const insertBookingSchema = createInsertSchema(bookings).omit({
+  id: true,
+  createdAt: true,
+  status: true,
+});
+
 export type CustomerAccount = typeof customerAccounts.$inferSelect;
 export type InsertCustomerAccount = z.infer<typeof insertCustomerAccountSchema>;
 
@@ -54,6 +73,9 @@ export type InsertService = z.infer<typeof insertServiceSchema>;
 
 export type BeforeAfterItem = typeof beforeAfterItems.$inferSelect;
 export type InsertBeforeAfterItem = z.infer<typeof insertBeforeAfterItemSchema>;
+
+export type Booking = typeof bookings.$inferSelect;
+export type InsertBooking = z.infer<typeof insertBookingSchema>;
 
 export type CustomerSignupRequest = InsertCustomerAccount & { password: string };
 export type CustomerLoginRequest = z.infer<typeof loginCustomerSchema>;

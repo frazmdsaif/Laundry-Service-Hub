@@ -3,6 +3,7 @@ import {
   insertBeforeAfterItemSchema,
   insertCustomerAccountSchema,
   insertServiceSchema,
+  insertBookingSchema,
 } from "./schema";
 
 export const errorSchemas = {
@@ -93,6 +94,34 @@ export const api = {
       },
     },
   },
+  bookings: {
+    create: {
+      method: "POST" as const,
+      path: "/api/bookings",
+      input: insertBookingSchema,
+      responses: {
+        201: z.object({ id: z.string() }),
+        400: errorSchemas.validation,
+        401: errorSchemas.unauthorized,
+      },
+    },
+    list: {
+      method: "GET" as const,
+      path: "/api/bookings",
+      responses: {
+        200: z.array(
+          z.object({
+            id: z.string(),
+            bookingDate: z.string(),
+            bookingTime: z.string(),
+            address: z.string(),
+            status: z.string(),
+          })
+        ),
+        401: errorSchemas.unauthorized,
+      },
+    },
+  },
 };
 
 export function buildUrl(
@@ -124,3 +153,6 @@ export type ServiceListResponse = z.infer<typeof api.services.list.responses[200
 export type BeforeAfterListResponse = z.infer<
   typeof api.beforeAfter.list.responses[200]
 >;
+
+export type BookingCreateInput = z.infer<typeof api.bookings.create.input>;
+export type BookingListResponse = z.infer<typeof api.bookings.list.responses[200]>;

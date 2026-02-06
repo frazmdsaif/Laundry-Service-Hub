@@ -2,6 +2,7 @@ import {
   beforeAfterItems,
   customerAccounts,
   services,
+  bookings,
   type BeforeAfterItem,
   type CustomerAccount,
   type CustomerLoginRequest,
@@ -9,6 +10,8 @@ import {
   type InsertBeforeAfterItem,
   type InsertService,
   type Service,
+  type Booking,
+  type InsertBooking,
 } from "@shared/schema";
 import { eq } from "drizzle-orm";
 import { db } from "./db";
@@ -22,6 +25,9 @@ export interface IStorage {
 
   listBeforeAfterItems(): Promise<BeforeAfterItem[]>;
   createBeforeAfterItem(input: InsertBeforeAfterItem): Promise<BeforeAfterItem>;
+
+  createBooking(input: InsertBooking): Promise<Booking>;
+  listBookings(customerId: string): Promise<Booking[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -63,6 +69,18 @@ export class DatabaseStorage implements IStorage {
   async createBeforeAfterItem(input: InsertBeforeAfterItem): Promise<BeforeAfterItem> {
     const [created] = await db.insert(beforeAfterItems).values(input).returning();
     return created;
+  }
+
+  async createBooking(input: InsertBooking): Promise<Booking> {
+    const [created] = await db.insert(bookings).values(input).returning();
+    return created;
+  }
+
+  async listBookings(customerId: string): Promise<Booking[]> {
+    return await db
+      .select()
+      .from(bookings)
+      .where(eq(bookings.customerId, customerId));
   }
 }
 
