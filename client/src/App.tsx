@@ -11,6 +11,8 @@ import BeforeAfter from "@/pages/BeforeAfter";
 import Signup from "@/pages/Signup";
 import Login from "@/pages/Login";
 import Account from "@/pages/Account";
+import Booking from "@/pages/Booking";
+import Bookings from "@/pages/Bookings";
 
 function Router() {
   return (
@@ -21,6 +23,8 @@ function Router() {
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={Login} />
       <Route path="/account" component={Account} />
+      <Route path="/book" component={Booking} />
+      <Route path="/bookings" component={Bookings} />
 
       {/* Convenience: old spelling */}
       <Route path="/beforeafter">

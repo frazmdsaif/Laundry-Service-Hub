@@ -18,6 +18,8 @@ export default function SignupPage() {
   const { data: me, isLoading: meLoading } = useCustomerMe();
   const signup = useCustomerSignup();
   const { toast } = useToast();
+  const next = new URLSearchParams(window.location.search).get("next");
+  const nextHref = next ? `?next=${encodeURIComponent(next)}` : "";
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -34,9 +36,9 @@ export default function SignupPage() {
 
   useEffect(() => {
     if (!meLoading && me) {
-      window.location.href = "/account";
+      window.location.href = next || "/account";
     }
-  }, [me, meLoading]);
+  }, [me, meLoading, next]);
 
   return (
     <>
@@ -92,7 +94,7 @@ export default function SignupPage() {
                       </div>
                     </div>
                     <Link
-                      href="/login"
+                      href={`/login${nextHref}`}
                       className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
                       data-testid="signup-to-login"
                     >
@@ -112,7 +114,7 @@ export default function SignupPage() {
                               title: "Account created",
                               description: "You’re signed in.",
                             });
-                            window.location.href = "/account";
+                            window.location.href = next || "/account";
                           },
                           onError: (err) => {
                             toast({

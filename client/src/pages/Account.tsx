@@ -157,29 +157,41 @@ export default function AccountPage() {
                           </div>
                         </div>
                       </Link>
+
+                      <Link
+                        href="/bookings"
+                        className="block"
+                        data-testid="account-go-bookings"
+                      >
+                        <div className="group rounded-2xl border bg-background/60 p-5 shadow-premium transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10">
+                          <div className="font-display text-xl">My bookings</div>
+                          <div className="mt-2 text-sm text-muted-foreground">
+                            Track pickup details and status.
+                          </div>
+                          <div className="mt-4 inline-flex items-center text-sm font-semibold">
+                            View bookings
+                            <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-0.5" />
+                          </div>
+                        </div>
+                      </Link>
                     </div>
 
                     <div className="mt-6 rounded-2xl border bg-gradient-to-br from-primary/10 via-background to-accent/10 p-5">
                       <div className="text-sm font-semibold">
-                        Booking integration
+                        Need a pickup?
                       </div>
                       <p className="mt-1 text-sm text-muted-foreground">
-                        This UI includes “Book” CTAs. Connect a booking endpoint to enable ordering.
+                        Book a fresh slot and share your pickup address.
                       </p>
-                      <Button
-                        variant="secondary"
-                        className="mt-4 rounded-xl"
-                        onClick={() =>
-                          toast({
-                            title: "Booking not configured",
-                            description:
-                              "Add an API endpoint for bookings to enable checkout.",
-                          })
-                        }
-                        data-testid="account-booking-info"
-                      >
-                        Learn what to add
-                      </Button>
+                      <Link href="/book" className="inline-flex mt-4">
+                        <Button
+                          variant="secondary"
+                          className="rounded-xl"
+                          data-testid="account-booking-info"
+                        >
+                          Book a slot
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </Card>

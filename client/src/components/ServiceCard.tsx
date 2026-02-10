@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import type { Service } from "@shared/schema";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "wouter";
 
 function formatInr(n: number) {
   try {
@@ -28,7 +28,7 @@ export default function ServiceCard({
   onBook?: (service: Service) => void;
   testId: string;
 }) {
-  const { toast } = useToast();
+  const [, setLocation] = useLocation();
 
   return (
     <Card
@@ -86,11 +86,7 @@ export default function ServiceCard({
           <Button
             onClick={() => {
               if (onBook) return onBook(service);
-              toast({
-                title: "Booking coming soon",
-                description:
-                  "This UI is ready — connect a booking endpoint when available.",
-              });
+              setLocation(`/book?serviceId=${service.id}`);
             }}
             data-testid={`${testId}-book`}
             className={cn(

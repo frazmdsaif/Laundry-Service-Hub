@@ -98,7 +98,7 @@ export const api = {
     create: {
       method: "POST" as const,
       path: "/api/bookings",
-      input: insertBookingSchema,
+      input: insertBookingSchema.omit({ customerId: true }),
       responses: {
         201: z.object({ id: z.string() }),
         400: errorSchemas.validation,
