@@ -62,7 +62,7 @@ export default function ServiceCard({
               Starting at
             </div>
             <div className="mt-1 text-lg sm:text-xl font-bold">
-              {formatInr(service.priceInr)}
+              {formatInr(service.priceInr)} /kg
             </div>
           </div>
         </div>
@@ -78,7 +78,7 @@ export default function ServiceCard({
           </div>
           <div className="inline-flex items-center gap-2 rounded-xl border bg-background/70 px-3 py-2 text-xs font-semibold">
             <span className="h-2 w-2 rounded-full bg-primary" />
-            Free pickup (select areas)
+            Free pickup and delivery
           </div>
         </div>
 

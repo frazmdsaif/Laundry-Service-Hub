@@ -252,8 +252,20 @@ export default function Home() {
             </div>
           </div>
 
-          <footer className="mt-12 pb-2 text-center text-xs text-muted-foreground">
-            <span className="font-semibold text-foreground/80">Laundrè</span> — premium laundry care
+          <footer className="mt-12 pb-2 flex flex-col items-center gap-3 text-center text-xs text-muted-foreground">
+            <a
+              href="https://wa.me/917004534354"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex"
+            >
+              <Button variant="secondary" className="rounded-xl">
+                Support on WhatsApp +91 70045 34354
+              </Button>
+            </a>
+            <span>
+              <span className="font-semibold text-foreground/80">Laundrè</span> — premium laundry care
+            </span>
           </footer>
         </div>
       </Shell>

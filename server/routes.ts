@@ -4,7 +4,6 @@ import { api } from "@shared/routes";
 import { z } from "zod";
 import { storage } from "./storage";
 import crypto from "crypto";
-import { setupAuth, registerAuthRoutes } from "./replit_integrations/auth";
 
 const CUSTOMER_SESSION_KEY = "customer";
 
@@ -86,9 +85,6 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express,
 ): Promise<Server> {
-  await setupAuth(app);
-  registerAuthRoutes(app);
-
   await seedDatabase();
 
   app.post(api.auth.customerSignup.path, async (req: any, res) => {

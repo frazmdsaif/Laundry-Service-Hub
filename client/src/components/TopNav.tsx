@@ -49,9 +49,9 @@ export default function TopNav() {
             >
               <span className="relative grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-primary/18 to-accent/22 border border-border">
                 <Droplets className="h-4 w-4 text-primary" />
-                <span className="absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full bg-accent text-accent-foreground shadow">
+                {/* <span className="absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full bg-accent text-accent-foreground shadow">
                   <Sparkles className="h-3 w-3" />
-                </span>
+                </span> */}
               </span>
               <div className="leading-tight">
                 <div className="font-display text-base sm:text-lg">
