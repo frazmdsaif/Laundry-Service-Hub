@@ -10,11 +10,15 @@ import { useServices } from "@/hooks/use-services";
 import { useBeforeAfterItems } from "@/hooks/use-before-after";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shirt, Sparkles, Image as ImageIcon } from "lucide-react";
+import { ArrowRight, Shirt, Sparkles, Image as ImageIcon, MapPin } from "lucide-react";
 
 export default function Home() {
   const services = useServices();
   const ba = useBeforeAfterItems();
+
+  const handleRedirection = () => {
+    window.location.href = "/services";
+  }
 
   return (
     <>
@@ -36,9 +40,9 @@ export default function Home() {
             </div>
 
             <div className="relative p-6 sm:p-10 lg:p-12">
-              <div className="max-w-3xl">
+              <div className="w-full">
                 <div className="inline-flex items-center gap-2 rounded-full border bg-background/60 px-3 py-1 text-xs font-semibold text-muted-foreground">
-                  <Sparkles className="h-4 w-4 text-accent-foreground" />
+                  {/* <Sparkles className="h-4 w-4 text-accent-foreground" /> */}
                   Clean minimal. Premium results.
                 </div>
 
@@ -47,8 +51,9 @@ export default function Home() {
                 </h1>
 
                 <p className="mt-4 text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed">
-                  Thoughtful care for everyday essentials and special pieces. Pick a service,
-                  schedule pickup, and enjoy crisp, clean results.
+                  Thoughtful care for everyday essentials and special pieces.
+                  Pick a service, schedule pickup, and enjoy crisp, clean
+                  results.
                 </p>
 
                 <div className="mt-7 flex flex-col sm:flex-row gap-3 sm:items-center">
@@ -57,9 +62,7 @@ export default function Home() {
                     data-testid="home-cta-services"
                     className="inline-flex"
                   >
-                    <Button
-                      className="w-full sm:w-auto rounded-xl bg-gradient-to-r from-primary to-primary/85 text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-0.5 active:translate-y-0 transition-all"
-                    >
+                    <Button className="w-full sm:w-auto rounded-xl bg-gradient-to-r from-primary to-primary/85 text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-0.5 active:translate-y-0 transition-all">
                       Explore services
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
@@ -80,19 +83,51 @@ export default function Home() {
                   </Link>
                 </div>
 
-                <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="rounded-2xl border bg-background/60 px-4 py-3">
-                    <div className="text-xs font-semibold text-muted-foreground">Turnaround</div>
-                    <div className="mt-1 font-semibold">24–48 hours</div>
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-5 gap-3">
+                  <div onClick={handleRedirection} className="cursor-pointer rounded-2xl border bg-background/60 px-4 py-3 flex justify-between items-center gap-4">
+                    <div>
+                      <div className="text-xs font-semibold ">Book</div>
+                      <div className="mt-1 font-semibold text-muted-foreground">
+                        Easy booking in seconds
+                      </div>
+                    </div>
+
+                    <ArrowRight className="h-4 w-4 ml-2" strokeWidth={4} color="green"/>
                   </div>
-                  <div className="rounded-2xl border bg-background/60 px-4 py-3">
-                    <div className="text-xs font-semibold text-muted-foreground">Care</div>
-                    <div className="mt-1 font-semibold">Fabric-safe</div>
+                   <div onClick={handleRedirection} className="cursor-pointer rounded-2xl border bg-background/60 px-4 py-3 flex justify-between items-center gap-4">
+                    <div>
+                      <div className="text-xs font-semibold ">Pickup</div>
+                      <div className="mt-1 font-semibold text-muted-foreground">
+                        Doorstep collection
+                      </div>
+                    </div>
+                    <ArrowRight className="h-4 w-4 ml-2" strokeWidth={4} color="green"/>
                   </div>
-                  <div className="rounded-2xl border bg-background/60 px-4 py-3">
-                    <div className="text-xs font-semibold text-muted-foreground">Support</div>
-                    <div className="mt-1 font-semibold">WhatsApp-ready</div>
+                    <div onClick={handleRedirection} className="cursor-pointer rounded-2xl border bg-background/60 px-4 py-3 flex justify-between items-center gap-4">
+                    <div>
+                      <div className="text-xs font-semibold ">Washing</div>
+                      <div className="mt-1 font-semibold text-muted-foreground ">
+                        Fabric-safe cleaning
+                      </div>
+                    </div>
+                    <ArrowRight className="h-4 w-4 ml-2" strokeWidth={4} color="green"/>
                   </div>
+                   <div onClick={handleRedirection} className="cursor-pointer rounded-2xl border bg-background/60 px-4 py-3 flex justify-between items-center gap-4">
+                    <div>
+                      <div className="text-xs font-semibold ">Packing</div>
+                      <div className="mt-1 font-semibold text-muted-foreground">
+                        wrinkle-free packing
+                      </div>
+                    </div>
+                    <ArrowRight className="h-4 w-4 ml-2" strokeWidth={4} color="green"/>
+                  </div>
+                   <div onClick={handleRedirection} className="cursor-pointer rounded-2xl border bg-background/60 px-4 py-3 flex justify-between items-center gap-4">
+                    <div>
+                      <div className="text-xs font-semibold ">Delivery</div>
+                      <div className="mt-1 font-semibold text-muted-foreground">Fast return within 24</div>
+                    </div>
+                    <MapPin className="h-4 w-4 ml-2" strokeWidth={3} color="green"/>
+                  </div>{" "}
                 </div>
               </div>
             </div>
@@ -236,13 +271,21 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link href="/signup" data-testid="home-cta-signup" className="inline-flex">
+                <Link
+                  href="/signup"
+                  data-testid="home-cta-signup"
+                  className="inline-flex"
+                >
                   <Button className="rounded-xl bg-gradient-to-r from-primary to-primary/85 text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-0.5 active:translate-y-0 transition-all">
                     Sign up
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
                 </Link>
-                <Link href="/login" data-testid="home-cta-login" className="inline-flex">
+                <Link
+                  href="/login"
+                  data-testid="home-cta-login"
+                  className="inline-flex"
+                >
                   <Button variant="secondary" className="rounded-xl">
                     Log in
                     <ArrowRight className="h-4 w-4 ml-2" />
@@ -264,7 +307,8 @@ export default function Home() {
               </Button>
             </a>
             <span>
-              <span className="font-semibold text-foreground/80">Laundrè</span> — premium laundry care
+              <span className="font-semibold text-foreground/80">Laundrè</span>{" "}
+              — premium laundry care
             </span>
           </footer>
         </div>

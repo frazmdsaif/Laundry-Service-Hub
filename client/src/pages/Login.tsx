@@ -47,7 +47,7 @@ export default function LoginPage() {
             <div className="lg:col-span-5">
               <div className="glass rounded-3xl p-6 sm:p-8 shadow-premium">
                 <div className="inline-flex items-center gap-2 rounded-full border bg-background/60 px-3 py-1 text-xs font-semibold text-muted-foreground">
-                  <Sparkles className="h-4 w-4 text-accent-foreground" />
+                  {/* <Sparkles className="h-4 w-4 text-accent-foreground" /> */}
                   Welcome back
                 </div>
                 <h1 className="mt-4 font-display text-3xl sm:text-4xl leading-[1.05]">
